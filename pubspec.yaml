@@ -1,0 +1,21 @@
+name: rivium_storage
+description: Official Flutter SDK for RiviumStorage - File storage and image transformation service
+version: 0.1.0
+homepage: https://rivium.co
+repository: https://github.com/Rivium-co/rivium-storage-flutter-sdk
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+  flutter: '>=3.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  http: ^1.2.0
+  http_parser: ^4.0.2
+  mime: ^1.0.5
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0

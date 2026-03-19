@@ -1,0 +1,31 @@
+# Dart/Flutter
+.dart_tool/
+.packages
+build/
+pubspec.lock
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# macOS
+.DS_Store
+
+# Claude / Cloud
+.cloud/
+.claude/
+
+# Local properties
+local.properties
+
+# Gradle cache
+.gradle/
+.kotlin/
+
+# Flutter generated
+.metadata
+.flutter-plugins
+.flutter-plugins-dependencies
+GeneratedPluginRegistrant.java
+example/android/gradle/wrapper/gradle-wrapper.jar
