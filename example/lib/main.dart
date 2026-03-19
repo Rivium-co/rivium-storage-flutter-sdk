@@ -213,6 +213,10 @@ class _ExampleHomePageState extends State<ExampleHomePage> {
                     label: 'Test: Images Only',
                     onPressed: () => _testImagesOnly(),
                   ),
+                  ExampleButton(
+                    label: 'Test: Bucket Settings (size & type)',
+                    onPressed: () => _testBucketSettings(),
+                  ),
 
                   // Error Handling
                   const SectionHeader(title: '⚠️ Error Handling'),
@@ -1060,6 +1064,67 @@ class _ExampleHomePageState extends State<ExampleHomePage> {
     log('  List:           ✅ ALLOWED (read is open)');
     log('  No userId PNG:  ❌ DENIED (auth required for upload)');
     log('  No userId List: ✅ ALLOWED (read is open)');
+  }
+
+  // ----------------------------------------------------------
+  // Test: Bucket Settings (maxFileSize & allowedMimeTypes)
+  // ----------------------------------------------------------
+  Future<void> _testBucketSettings() async {
+    await _ensureBucket();
+    if (_lastBucketId == null) return;
+
+    log('');
+    log('═══════════════════════════════════════');
+    log('  TEST: Bucket Settings');
+    log('  (independent of policy rules)');
+    log('═══════════════════════════════════════');
+    log('');
+    log('These are enforced by the bucket config,');
+    log('NOT by security rules. They always apply');
+    log('even when policies are disabled.');
+    log('');
+
+    final ts = DateTime.now().millisecondsSinceEpoch;
+
+    // -- Test allowedMimeTypes --
+    log('── Allowed MIME Types ──');
+    log('Dashboard: Settings tab → Allowed File Types');
+    log('');
+    log('Upload PNG:   ${await _tryUpload('test/settings-$ts.png', _pngData(), contentType: 'image/png')}');
+    log('Upload text:  ${await _tryUpload('test/settings-$ts.txt', _textData(), contentType: 'text/plain')}');
+    log('Upload PDF:   ${await _tryUpload('test/settings-$ts.pdf', _textData(), contentType: 'application/pdf')}');
+    log('');
+
+    // -- Test maxFileSize --
+    log('── Max File Size ──');
+    log('Dashboard: Settings tab → Max File Size');
+    log('');
+    log('Small file (< 1KB):');
+    log('  Upload:       ${await _tryUpload('test/small-$ts.txt', _textData())}');
+    log('');
+
+    // Create a large file (~2MB) to test size limits
+    final largeData = Uint8List(2 * 1024 * 1024); // 2MB of zeros
+    log('Large file (~2MB):');
+    log('  Upload:       ${await _tryUpload('test/large-$ts.bin', largeData, contentType: 'application/octet-stream')}');
+    log('');
+
+    log('── How to test ──');
+    log('');
+    log('1. Set Allowed File Types to "image/*"');
+    log('   → PNG ✅, text ❌, PDF ❌');
+    log('');
+    log('2. Add "application/pdf" to Allowed File Types');
+    log('   → PNG ✅, text ❌, PDF ✅');
+    log('');
+    log('3. Remove all file type restrictions');
+    log('   → Everything ✅');
+    log('');
+    log('4. Set Max File Size to 1 MB');
+    log('   → Small ✅, Large (~2MB) ❌');
+    log('');
+    log('5. Set Max File Size to 10 MB');
+    log('   → Both ✅');
   }
 
   // ============================================================
