@@ -58,7 +58,8 @@ class ExampleHomePage extends StatefulWidget {
 }
 
 class _ExampleHomePageState extends State<ExampleHomePage> {
-  final RiviumStorage storage = RiviumStorage(apiKey: apiKey, userId: userId, timeout: 30);
+  final RiviumStorage storage =
+      RiviumStorage(apiKey: apiKey, userId: userId, timeout: 30);
   final List<LogEntry> logs = [];
   final ScrollController _scrollController = ScrollController();
 
@@ -264,7 +265,8 @@ class _ExampleHomePageState extends State<ExampleHomePage> {
                     style: TextStyle(
                       fontFamily: 'monospace',
                       fontSize: 12,
-                      color: entry.isError ? Colors.red[300] : Colors.green[300],
+                      color:
+                          entry.isError ? Colors.red[300] : Colors.green[300],
                     ),
                   );
                 },
@@ -301,7 +303,8 @@ class _ExampleHomePageState extends State<ExampleHomePage> {
 
   Future<void> _getBucketById() async {
     if (_lastBucketId == null) {
-      log('⚠️ No bucket ID available. Run "List All Buckets" first.', isError: true);
+      log('⚠️ No bucket ID available. Run "List All Buckets" first.',
+          isError: true);
       return;
     }
     log('Getting bucket by ID: $_lastBucketId');
@@ -347,7 +350,8 @@ class _ExampleHomePageState extends State<ExampleHomePage> {
       return;
     }
 
-    final content = 'Hello, RiviumStorage! Timestamp: ${DateTime.now().millisecondsSinceEpoch}';
+    final content =
+        'Hello, RiviumStorage! Timestamp: ${DateTime.now().millisecondsSinceEpoch}';
     final data = Uint8List.fromList(content.codeUnits);
     final path = 'examples/test-${DateTime.now().millisecondsSinceEpoch}.txt';
 
@@ -460,7 +464,8 @@ class _ExampleHomePageState extends State<ExampleHomePage> {
       0x60,
       0x82
     ]);
-    final path = 'examples/images/sample-${DateTime.now().millisecondsSinceEpoch}.png';
+    final path =
+        'examples/images/sample-${DateTime.now().millisecondsSinceEpoch}.png';
 
     log('Uploading image: $path');
     try {
@@ -518,7 +523,8 @@ class _ExampleHomePageState extends State<ExampleHomePage> {
 
   Future<void> _getFileById() async {
     if (_lastFileId == null) {
-      log('⚠️ No file ID available. Upload a file or run "List Files" first.', isError: true);
+      log('⚠️ No file ID available. Upload a file or run "List Files" first.',
+          isError: true);
       return;
     }
     log('Getting file by ID: $_lastFileId');
@@ -537,7 +543,8 @@ class _ExampleHomePageState extends State<ExampleHomePage> {
 
   Future<void> _getFileByPath() async {
     if (_lastBucketId == null || _lastFilePath == null) {
-      log('⚠️ No bucket or file path available. Upload a file first.', isError: true);
+      log('⚠️ No bucket or file path available. Upload a file first.',
+          isError: true);
       return;
     }
     log('Getting file by path: $_lastFilePath');
@@ -593,7 +600,8 @@ class _ExampleHomePageState extends State<ExampleHomePage> {
 
   Future<void> _deleteByPath() async {
     if (_lastBucketId == null || _lastFilePath == null) {
-      log('⚠️ No bucket or file path available. Upload a file first.', isError: true);
+      log('⚠️ No bucket or file path available. Upload a file first.',
+          isError: true);
       return;
     }
     log('Deleting file by path: $_lastFilePath');
@@ -610,7 +618,8 @@ class _ExampleHomePageState extends State<ExampleHomePage> {
 
   Future<void> _deleteMany() async {
     if (_uploadedFileIds.isEmpty) {
-      log('⚠️ No uploaded file IDs tracked. Upload some files first.', isError: true);
+      log('⚠️ No uploaded file IDs tracked. Upload some files first.',
+          isError: true);
       return;
     }
     // Copy the list since we'll clear it
@@ -697,14 +706,18 @@ class _ExampleHomePageState extends State<ExampleHomePage> {
       'Resize 200x200': const ImageTransforms(width: 200, height: 200),
       'Width only (auto height)': const ImageTransforms(width: 400),
       'Height only (auto width)': const ImageTransforms(height: 300),
-      'Fit: cover': const ImageTransforms(width: 200, height: 200, fit: 'cover'),
-      'Fit: contain': const ImageTransforms(width: 200, height: 200, fit: 'contain'),
+      'Fit: cover':
+          const ImageTransforms(width: 200, height: 200, fit: 'cover'),
+      'Fit: contain':
+          const ImageTransforms(width: 200, height: 200, fit: 'contain'),
       'Fit: fill': const ImageTransforms(width: 200, height: 200, fit: 'fill'),
       'Format: WebP': const ImageTransforms(width: 200, format: 'webp'),
       'Format: AVIF': const ImageTransforms(width: 200, format: 'avif'),
       'Format: JPEG': const ImageTransforms(width: 200, format: 'jpeg'),
-      'Quality: 50%': const ImageTransforms(width: 200, format: 'jpeg', quality: 50),
-      'Quality: 90%': const ImageTransforms(width: 200, format: 'jpeg', quality: 90),
+      'Quality: 50%':
+          const ImageTransforms(width: 200, format: 'jpeg', quality: 50),
+      'Quality: 90%':
+          const ImageTransforms(width: 200, format: 'jpeg', quality: 90),
       'Blur effect': const ImageTransforms(width: 200, blur: 10),
       'Sharpen effect': const ImageTransforms(width: 200, sharpen: 50),
       'Rotate 90°': const ImageTransforms(rotate: 90),
@@ -737,7 +750,8 @@ class _ExampleHomePageState extends State<ExampleHomePage> {
   // before running each test.
 
   /// Helper: try an upload and report result
-  Future<String> _tryUpload(String path, Uint8List data, {String? contentType}) async {
+  Future<String> _tryUpload(String path, Uint8List data,
+      {String? contentType}) async {
     try {
       final file = await storage.upload(
         _lastBucketId!,
@@ -746,7 +760,9 @@ class _ExampleHomePageState extends State<ExampleHomePage> {
         options: UploadOptions(contentType: contentType),
       );
       // Clean up: delete the uploaded file
-      try { await storage.delete(file.id); } catch (_) {}
+      try {
+        await storage.delete(file.id);
+      } catch (_) {}
       return '✅ ALLOWED';
     } on RiviumStorageException catch (e) {
       if (e.statusCode == 403) return '❌ DENIED (${e.message})';
@@ -769,20 +785,81 @@ class _ExampleHomePageState extends State<ExampleHomePage> {
   Uint8List _textData() => Uint8List.fromList('test content'.codeUnits);
 
   Uint8List _pngData() => Uint8List.fromList([
-    0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A, 0x00, 0x00, 0x00, 0x0D,
-    0x49, 0x48, 0x44, 0x52, 0x00, 0x00, 0x00, 0x02, 0x00, 0x00, 0x00, 0x02,
-    0x08, 0x02, 0x00, 0x00, 0x00, 0xFD, 0xD4, 0x9A, 0x73, 0x00, 0x00, 0x00,
-    0x14, 0x49, 0x44, 0x41, 0x54, 0x78, 0x9C, 0x62, 0xF8, 0x0F, 0x00, 0x01,
-    0x01, 0x00, 0x05, 0x18, 0xD8, 0x4D, 0x00, 0x00, 0x00, 0x00, 0x49, 0x45,
-    0x4E, 0x44, 0xAE, 0x42, 0x60, 0x82,
-  ]);
+        0x89,
+        0x50,
+        0x4E,
+        0x47,
+        0x0D,
+        0x0A,
+        0x1A,
+        0x0A,
+        0x00,
+        0x00,
+        0x00,
+        0x0D,
+        0x49,
+        0x48,
+        0x44,
+        0x52,
+        0x00,
+        0x00,
+        0x00,
+        0x02,
+        0x00,
+        0x00,
+        0x00,
+        0x02,
+        0x08,
+        0x02,
+        0x00,
+        0x00,
+        0x00,
+        0xFD,
+        0xD4,
+        0x9A,
+        0x73,
+        0x00,
+        0x00,
+        0x00,
+        0x14,
+        0x49,
+        0x44,
+        0x41,
+        0x54,
+        0x78,
+        0x9C,
+        0x62,
+        0xF8,
+        0x0F,
+        0x00,
+        0x01,
+        0x01,
+        0x00,
+        0x05,
+        0x18,
+        0xD8,
+        0x4D,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x49,
+        0x45,
+        0x4E,
+        0x44,
+        0xAE,
+        0x42,
+        0x60,
+        0x82,
+      ]);
 
   Future<void> _ensureBucket() async {
     if (_lastBucketId != null) return;
     log('⚠️ No bucket. Running "List All Buckets" first...');
     await _listBuckets();
     if (_lastBucketId == null) {
-      log('❌ No bucket available. Create one in the dashboard first.', isError: true);
+      log('❌ No bucket available. Create one in the dashboard first.',
+          isError: true);
     }
   }
 
@@ -795,8 +872,9 @@ class _ExampleHomePageState extends State<ExampleHomePage> {
 
     log('');
     log('═══════════════════════════════════════');
-    log('  TEST: No Rules (default — allow all)');
-    log('  Dashboard: Delete all rules from bucket');
+    log('  TEST: No Rules (no policy on bucket)');
+    log('  Dashboard: Delete the policy from bucket');
+    log('  When no policy exists, all access is allowed');
     log('═══════════════════════════════════════');
     log('');
     log('Current userId: ${storage.userId ?? "none (unauthenticated)"}');
@@ -807,7 +885,7 @@ class _ExampleHomePageState extends State<ExampleHomePage> {
     log('Upload image:       ${await _tryUpload('test/no-rules-$ts.png', _pngData(), contentType: 'image/png')}');
     log('List files:         ${await _tryList()}');
     log('');
-    log('Expected: Everything ✅ ALLOWED (no restrictions)');
+    log('Expected: Everything ✅ ALLOWED (no policy = no restrictions)');
   }
 
   // ----------------------------------------------------------
@@ -821,7 +899,8 @@ class _ExampleHomePageState extends State<ExampleHomePage> {
     log('═══════════════════════════════════════');
     log('  TEST: Private Template');
     log('  Dashboard: Apply "Private" template');
-    log('  Rule: Block unauthenticated access');
+    log('  Rule: Allow only authenticated users');
+    log('  (default-deny: unauthenticated = denied)');
     log('═══════════════════════════════════════');
     log('');
 
@@ -859,7 +938,8 @@ class _ExampleHomePageState extends State<ExampleHomePage> {
     log('═══════════════════════════════════════');
     log('  TEST: Public Read Template');
     log('  Dashboard: Apply "Public Read" template');
-    log('  Rule: Anyone reads, auth required to write');
+    log('  Rule: Anyone can read/list,');
+    log('        auth required to write/delete');
     log('═══════════════════════════════════════');
     log('');
 
@@ -896,7 +976,8 @@ class _ExampleHomePageState extends State<ExampleHomePage> {
     log('═══════════════════════════════════════');
     log('  TEST: User Folders Template');
     log('  Dashboard: Apply "User Folders" template');
-    log('  Rule: Write/delete only in users/{userId}/');
+    log('  Rule: Auth users can read/list all,');
+    log('        write/delete only in users/{userId}/');
     log('═══════════════════════════════════════');
     log('');
 
@@ -946,7 +1027,9 @@ class _ExampleHomePageState extends State<ExampleHomePage> {
     log('═══════════════════════════════════════');
     log('  TEST: Images Only Template');
     log('  Dashboard: Apply "Images Only" template');
-    log('  Rule: Only image uploads (JPEG/PNG/GIF/WebP, 5MB)');
+    log('  Rule: Anyone can read/list/delete,');
+    log('        only auth users can upload images');
+    log('        (JPEG/PNG/GIF/WebP, 5MB max)');
     log('═══════════════════════════════════════');
     log('');
 
